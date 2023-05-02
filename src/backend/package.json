@@ -4,7 +4,8 @@
   "description": "Tugas Besar 3 IF2210 Strategi Algoritma Semester II Tahun Ajaran 2022/2023 Penerapan String Matching dan Regular Expression dalam Pembuatan ChatGPT Sederhana",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app/server.js"
   },
   "repository": {
     "type": "git",
@@ -19,5 +20,9 @@
     "url": "https://github.com/Marthenn/Tubes3_13521078/issues"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "mysql2": "^3.2.4"
+  }
 }
