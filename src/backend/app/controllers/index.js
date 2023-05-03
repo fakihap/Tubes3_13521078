@@ -15,9 +15,27 @@ async function read_question(){
     }
 }
 
+async function read_question(question){
+    try{
+        const [rows, fields] = await db.promise().query("SELECT * FROM questions WHERE question = ?", [question]);
+        return rows;
+    } catch (err) {
+        throw err;
+    }
+}
+
 async function read_history(){
     try{
         const [rows, fields] = await db.promise().query("SELECT * FROM history");
+        return rows;
+    } catch (err) {
+        throw err;
+    }
+}
+
+async function read_history(id){
+    try{
+        const [rows, fields] = await db.promise().query("SELECT * FROM history WHERE id = ?", [id]);
         return rows;
     } catch (err) {
         throw err;
@@ -95,6 +113,14 @@ const get_history = async function(req, res){
 const post_question = async function(req, res){
     const question = req.body.question;
     const answer = req.body.answer;
+    if (question == null || answer == null){
+        res.status(400).send("Question or answer cannot be null!");
+        return;
+    }
+    if (question == "" || answer == ""){
+        res.status(400).send("Question or answer cannot be empty!");
+        return;
+    }
     try{
         await add_question(question, answer);
         res.status(200).send("Question added!");
@@ -107,6 +133,14 @@ const post_question = async function(req, res){
 const post_history = async function(req, res){
     const question = req.body.question;
     const answer = req.body.answer;
+    if (question == null || answer == null){
+        res.status(400).send("Question or answer cannot be null!");
+        return;
+    }
+    if (question == "" || answer == ""){
+        res.status(400).send("Question or answer cannot be empty!");
+        return;
+    }
     try{
         await add_history(question, answer);
         res.status(200).send("History added!");
@@ -118,6 +152,15 @@ const post_history = async function(req, res){
 
 const del_history = async function(req, res){
     const id = req.params.id;
+    if (id == null){
+        res.status(400).send("ID cannot be null!");
+        return;
+    }
+    // if no id in the db
+    if (await read_history(id) == null){
+        res.status(400).send("ID not found!");
+        return;
+    }
     try{
         await delete_history(id);
         res.status(200).send("History deleted!");
@@ -129,6 +172,19 @@ const del_history = async function(req, res){
 
 const del_question = async function(req, res){
     const question = req.params.question;
+    if (question == null){
+        res.status(400).send("Question cannot be null!");
+        return;
+    }
+    if (question == ""){
+        res.status(400).send("Question cannot be empty!");
+        return;
+    }
+    // if no question in the db
+    if (await read_question(question) == null){
+        res.status(400).send("Question not found!");
+        return;
+    }
     try{
         await delete_question(question);
         res.status(200).send("Question deleted!");
