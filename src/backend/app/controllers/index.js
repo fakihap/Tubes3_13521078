@@ -1,4 +1,5 @@
 const db = require('../config/db.config.js');
+const algo = require('../algorithms/query.js');
 
 db.query("USE stima3", function(err, result){
     if (err) throw err;
@@ -214,6 +215,25 @@ const delete_question_all = async function(req, res){
     }
 }
 
+const get_answer = async function(req, res){
+    const question = req.params.question;
+    if (question == null){
+        res.status(400).send("Question cannot be null!");
+        return;
+    }
+    if (question == ""){
+        res.status(400).send("Question cannot be empty!");
+        return;
+    }
+    try{
+        const answer = await read_answer(question);
+        res.status(200).send(answer);
+    }
+    catch(err){
+        res.status(500).send("Failed to get answer!");
+    }
+}
+
 module.exports = {
     get_question,
     get_history,
@@ -222,5 +242,6 @@ module.exports = {
     del_history,
     del_question,
     delete_history_all,
-    delete_question_all
+    delete_question_all,
+    get_answer
 }

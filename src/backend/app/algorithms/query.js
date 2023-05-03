@@ -72,3 +72,5 @@ console.log(createAnswer(splitQuestion("Pak ustadz Berapa 1+2+3+4? Tambah pertan
 // var arr = [[2],[3],[4],[5]]
 // arr.splice(2,1)
 // console.log(arr)
+
+module.exports = createAnswer;

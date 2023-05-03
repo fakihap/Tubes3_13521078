@@ -13,6 +13,7 @@ module.exports = (app) => {
     router.delete('/question/:question', crud.del_question);
     router.delete('/history', crud.delete_history_all);
     router.delete('/question', crud.delete_question_all);
+    router.get('/answer/:question', crud.get_answer);
 
     app.use("/", router);
 }
