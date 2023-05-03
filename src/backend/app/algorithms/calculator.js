@@ -120,10 +120,13 @@ const calculateExpression = (expression) => {
 }
 
 const getMathAnswer = (expression) => {
-    expression.trim();
+    if (!expression) {
+        return;
+    }
+    expression = expression.trim();
     return calculateExpression(convertToPostfix(convertToArray(expression)));
 } 
 
-module.exports = function(expression) {
-    this.getMathAnswer = getMathAnswer(expression);
+module.exports = {
+    getMathAnswer   
 }

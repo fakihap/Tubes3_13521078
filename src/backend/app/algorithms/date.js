@@ -1,4 +1,4 @@
-function answerDate(date) {
+const answerDate = (date) => {
     const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
     
     const d = new Date(date);
@@ -44,7 +44,7 @@ function answerDate(date) {
 
 } */
 
-function validateDate(day, month, year) {
+const validateDate = (day, month, year) => {
     if (day < 1 || day > 31) {
         return false;
     }
@@ -91,11 +91,11 @@ function validateDate(day, month, year) {
     return true;
 }
 
-function countLeapYear(year) {
+const countLeapYear = (year) => {
     return Math.floor(year / 4) - Math.floor(year / 100) + Math.floor(year / 400);
 }
 
-function isLeapYear(year) {
+const isLeapYear = (year) => {
     if (year % 4 == 0) {
         if (year % 100 == 0) {
             if (year % 400 == 0) {
@@ -108,8 +108,18 @@ function isLeapYear(year) {
     else return false;
 }
 
-function g(y,m,d) {
+const g = (y,m,d) => {
     m = (m + 9) % 12
     y = y - Math.floor(m/10)
     return 365*y + Math.floor(y/4) - Math.floor(y/100) + Math.floor(y/400) + Math.floor((m*366 + 5)/10) + ( d - 1 )
+}
+
+const getDateAnswer = (query) => {
+    date = query.match(/[0-9]+\/[0-9]+\/[0-9]+/g);
+
+    return answerDate(date);
+}
+
+module.exports = {
+    getDateAnswer
 }

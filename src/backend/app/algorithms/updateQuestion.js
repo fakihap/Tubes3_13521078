@@ -1,14 +1,14 @@
-require('./patternMatch.js')();
+const pattern = require('./patternMatch.js');
 
 const searchQuestion = (listOfQnA, query, method) => {
-    for (let i = 0; i < listOfQnA.length; i++) {
+    for (let i = 0; i < listOfQnA?.length; i++) {
         if (method == "kmp") {
-            if (kmpMatch(listOfQnA[i][0], query) != -1) {
+            if (pattern.kmpMatch(listOfQnA[i][0], query) != -1) {
                 return i;
             }
         }
         else {
-            if (bmMatch(listOfQnA[i][0], query) != -1) {
+            if (pattern.bmMatch(listOfQnA[i][0], query) != -1) {
                 return i;
             }
         }
@@ -17,10 +17,12 @@ const searchQuestion = (listOfQnA, query, method) => {
 }
 
 const addQuestion = (listOfQnA, query, method) => {
+    query = query.replace(/[Tt]ambah pertanyaan/g, "");
+    query = query.replace(/dengan jawaban/g, "#");
+
     const splitQuery = query.split("#");
     const question = splitQuery[0].trim();
     const answer = splitQuery[1].trim();
-
     const index = searchQuestion(listOfQnA, question, method);
     if (index == -1) {
         listOfQnA.push([question, answer]);
@@ -33,6 +35,8 @@ const addQuestion = (listOfQnA, query, method) => {
 }
 
 const deleteQuestion = (listOfQnA, query, method) => {
+    query = query.replace(/[Hh]apus pertanyaan/g, "");
+
     const question = query.trim();
 
     const index = searchQuestion(listOfQnA, question, method);
@@ -45,7 +49,7 @@ const deleteQuestion = (listOfQnA, query, method) => {
     }
 }
 
-module.exports = function(listOfQnA, query, method) {
-    this.addQuestion = addQuestion(listOfQnA, query, method);
-    this.deleteQuestion = deleteQuestion(listOfQnA, query, method);
+module.exports = {
+    addQuestion,
+    deleteQuestion
 }

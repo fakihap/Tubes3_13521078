@@ -183,6 +183,11 @@ const getAnswer = (listOfQnA, pattern, method) => {
     return noExactCase(listOfQnA, pattern);
 }
 
+module.exports = {
+    getAnswer,
+    kmpMatch,
+    bmMatch
+}
 // listOfQnA = [["siapa nama presiden indonesia", "jokowi"], ["siapa nama ibu kota indonesia", "jakarta"], ["siapa nama presiden amerika serikat", "donald trump"]]
 
 // console.log(getAnswer(listOfQnA, "siapa nama presiden indonesa", "kmp"));

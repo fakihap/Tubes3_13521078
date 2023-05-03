@@ -1,6 +1,11 @@
-require('./patternMatch.js')();
+const pattern = require('./patternMatch.js');
+const question = require('./updateQuestion.js');
+const calc = require('./calculator.js');
+const date = require('./date.js');
 
 const splitQuestion = (query) => {
+    query = query.toLowerCase();
+    query = query.replace(/pak ustadz/g, "").trim();
     return query.split(/[!?,]+/g).filter(function (el) {return el != "";});
 }
 
@@ -13,7 +18,6 @@ const classifyQuestion = (listOfQuestions) => {
     for (let i = 0; i < listOfQuestions.length; i++) {
         let temp = listOfQuestions[i].trim();
         if (regexDelete.test(temp)) {
-            temp.replace(/[Hh]apus pertanyaan/g, "");
             classifiedQuestions.push([temp, "delete"]);//delete question
         }
         else if (regexAdd.test(temp)) {
@@ -23,7 +27,7 @@ const classifyQuestion = (listOfQuestions) => {
             classifiedQuestions.push([temp, "date"]);//date
         }
         else if (regexMath.test(temp)) {
-            temp.replace(/[Bb]erapa/i, "");
+            temp = temp.replace(/[Bb]erapa/i, "");
             classifiedQuestions.push([temp, "math"]);//math
         }
         else {
@@ -39,26 +43,25 @@ const createAnswer = (listOfQuestions, listOfQnA, method) => {
 
     for (let i = 0; i < classifiedQuestions.length; i++) {
         if (classifiedQuestions[i][1] == "delete") {
-            answer.push(deleteQuestion(listOfQnA, classifiedQuestions[i][0], method));
+            answer.push(question.deleteQuestion(listOfQnA, classifiedQuestions[i][0], method));
         }
         else if (classifiedQuestions[i][1] == "add") {
-            answer.push(addQuestion(listOfQnA, classifiedQuestions[i][0], method));
+            answer.push(question.addQuestion(listOfQnA, classifiedQuestions[i][0], method));
         }
         else if (classifiedQuestions[i][1] == "date") {
-            answer.push(getDate(classifiedQuestions[i][0]));
+            answer.push(date.getDateAnswer(classifiedQuestions[i][0]));
         }
         else if (classifiedQuestions[i][1] == "math") {
-            answer.push(getMathAnswer(classifiedQuestions[i][0]));
+            answer.push(calc.getMathAnswer(classifiedQuestions[i][0]));
         }
         else {
-            answer.push(getAnswer(listOfQnA, classifiedQuestions[i][0], method));
+            answer.push(pattern.getAnswer(listOfQnA, classifiedQuestions[i][0], method));
         }
     }
     return answer;
 }
 
-console.log(classifyQuestion(splitQuestion("Berapa 2+5")));
-
+console.log(createAnswer(splitQuestion("Pak ustadz Berapa 1+2+3+4? Tambah pertanyaan x dengan jawaban y! 5/4/2023? Pak ustadz siapa nama presiden indonesia" ), [["siapa nama presiden indonesia", "jokowi"], ["siapa nama ibu kota indonesia", "jakarta"], ["siapa nama presiden amerika serikat", "donald trump"]], "kmp"));
 
 // console.log(splitQuestion("Siapa nama presiden indonesia! Siapa nama! Siapa? siapa, siapa?"))
 
