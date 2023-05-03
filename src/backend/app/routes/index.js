@@ -9,8 +9,8 @@ module.exports = (app) => {
     router.get('/history', crud.get_history);
     router.post('/question', crud.post_question);
     router.post('/history', crud.post_history);
-    router.delete('/history/:id', crud.delete_history);
-    router.delete('/question/:question', crud.delete_question);
+    router.delete('/history/:id', crud.del_history);
+    router.delete('/question/:question', crud.del_question);
     router.delete('/history', crud.delete_history_all);
     router.delete('/question', crud.delete_question_all);
 

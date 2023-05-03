@@ -116,7 +116,7 @@ const post_history = async function(req, res){
     }
 }
 
-const delete_history = async function(req, res){
+const del_history = async function(req, res){
     const id = req.params.id;
     try{
         await delete_history(id);
@@ -127,7 +127,7 @@ const delete_history = async function(req, res){
     }
 }
 
-const delete_question = async function(req, res){
+const del_question = async function(req, res){
     const question = req.params.question;
     try{
         await delete_question(question);
@@ -163,8 +163,8 @@ module.exports = {
     get_history,
     post_question,
     post_history,
-    delete_history,
-    delete_question,
+    del_history,
+    del_question,
     delete_history_all,
     delete_question_all
 }
