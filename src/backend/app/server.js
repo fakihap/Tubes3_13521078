@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
-const crud = require('/controllers/index.js');
+const routes = require('./routes/index.js');
 
 const app = express();
 
@@ -18,6 +18,8 @@ app.use(
     })
 )
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}.`);
+routes(app);
+
+app.listen(36656, () => {
+    console.log(`Server is runninglah yah.`);
 });

@@ -6,7 +6,7 @@ db.query("USE stima3", function(err, result){
 });
 
 
-async function get_question(){
+async function read_question(){
     try{
         const [rows, fields] = await db.promise().query("SELECT * FROM questions");
         return rows;
@@ -15,7 +15,7 @@ async function get_question(){
     }
 }
 
-async function get_history(){
+async function read_history(){
     try{
         const [rows, fields] = await db.promise().query("SELECT * FROM history");
         return rows;
@@ -72,13 +72,99 @@ async function clear_question(){
     }
 }
 
+const get_question = async function(req, res){
+    try{
+        const question = await read_question();
+        res.status(200).send(question);
+    }
+    catch(err){
+        res.status(500).send("Failed to get question!");
+    }
+}
+
+const get_history = async function(req, res){
+    try{
+        const history = await read_history();
+        res.status(200).send(history);
+    }
+    catch(err){
+        res.status(500).send("Failed to get history!");
+    }
+}
+
+const post_question = async function(req, res){
+    const question = req.body.question;
+    const answer = req.body.answer;
+    try{
+        await add_question(question, answer);
+        res.status(200).send("Question added!");
+    }
+    catch(err){
+        res.status(500).send("Failed to add question!");
+    }
+}
+
+const post_history = async function(req, res){
+    const question = req.body.question;
+    const answer = req.body.answer;
+    try{
+        await add_history(question, answer);
+        res.status(200).send("History added!");
+    }
+    catch(err){
+        res.status(500).send("Failed to add history!");
+    }
+}
+
+const delete_history = async function(req, res){
+    const id = req.params.id;
+    try{
+        await delete_history(id);
+        res.status(200).send("History deleted!");
+    }
+    catch(err){
+        res.status(500).send("Failed to delete history!");
+    }
+}
+
+const delete_question = async function(req, res){
+    const question = req.params.question;
+    try{
+        await delete_question(question);
+        res.status(200).send("Question deleted!");
+    }
+    catch(err){
+        res.status(500).send("Failed to delete question!");
+    }
+}
+
+const delete_history_all = async function(req, res){
+    try{
+        await clear_history();
+        res.status(200).send("History cleared!");
+    }
+    catch(err){
+        res.status(500).send("Failed to clear history!");
+    }
+}
+
+const delete_question_all = async function(req, res){
+    try{
+        await clear_question();
+        res.status(200).send("Question cleared!");
+    }
+    catch(err){
+        res.status(500).send("Failed to clear question!");
+    }
+}
+
 module.exports = {
     get_question,
     get_history,
-    add_question,
-    add_history,
+    post_question,
+    post_history,
     delete_history,
     delete_question,
-    clear_history,
-    clear_question
+    delete_history_all,
+    delete_question_all
 }
