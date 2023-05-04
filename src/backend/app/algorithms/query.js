@@ -4,30 +4,32 @@ const calc = require('./calculator.js');
 const date = require('./date.js');
 
 const splitQuestion = (query) => {
-    query = query.toLowerCase();
-    query = query.replace(/pak ustadz/g, "").trim();
-    return query.split(/[!?,]+/g).filter(function (el) {return el != "";});
+    temp = query.toLowerCase();
+    temp = temp.replace(/pak ustadz/g, "").trim();
+    temp = temp.split(/[!?,]+/g).filter(function (el) {return el != "";});
+
+    return temp;
 }
 
 const classifyQuestion = (listOfQuestions) => {
-    var classifiedQuestions = [];
+    let classifiedQuestions = [];
     const regexDelete = /[Hh]apus pertanyaan.+/g;
     const regexAdd = /[Tt]ambah pertanyaan.+dengan jawaban.+/g;
     const regexDate = /[0-9]+\/[0-9]+\/[0-9]+/g;
     const regexMath = /[Bb]erapa|[Hh]itung|=/g;
     for (let i = 0; i < listOfQuestions.length; i++) {
         let temp = listOfQuestions[i].trim();
-        if (regexDelete.test(temp)) {
+        if (temp.search(regexDelete) != -1) {
             classifiedQuestions.push([temp, "delete"]);//delete question
         }
-        else if (regexAdd.test(temp)) {
+        else if (temp.search(regexAdd) != -1) {
             classifiedQuestions.push([temp, "add"]);//add question
         }
-        else if (regexDate.test(temp)) {
+        else if (temp.search(regexDate) != -1) {
             classifiedQuestions.push([temp, "date"]);//date
         }
-        else if (regexMath.test(temp)) {
-            temp = temp.replace(/[Bb]erapa/i, "");
+        else if (temp.search(regexMath) != -1) {
+            temp = temp.replace(/[Bb]erapa|[Hh]itung|=/i, "");
             classifiedQuestions.push([temp, "math"]);//math
         }
         else {
@@ -38,15 +40,16 @@ const classifyQuestion = (listOfQuestions) => {
 }
 
 const createAnswer = (listOfQuestions, listOfQnA, method) => {
-    var classifiedQuestions = classifyQuestion(listOfQuestions);
-    var answer = [];
+    const classifiedQuestions = classifyQuestion(listOfQuestions);
+    let answer = [];
 
     for (let i = 0; i < classifiedQuestions.length; i++) {
+        let temp = classifiedQuestions[i][0];
         if (classifiedQuestions[i][1] == "delete") {
             answer.push(question.deleteQuestion(listOfQnA, classifiedQuestions[i][0], method));
         }
         else if (classifiedQuestions[i][1] == "add") {
-            answer.push(question.addQuestion(listOfQnA, classifiedQuestions[i][0], method));
+            answer.push(question.addQuestion(listOfQnA, temp, method));
         }
         else if (classifiedQuestions[i][1] == "date") {
             answer.push(date.getDateAnswer(classifiedQuestions[i][0]));
@@ -61,7 +64,25 @@ const createAnswer = (listOfQuestions, listOfQnA, method) => {
     return answer;
 }
 
-console.log(createAnswer(splitQuestion("Pak ustadz Berapa 1+2+3+4? Tambah pertanyaan x dengan jawaban y! 5/4/2023? Pak ustadz siapa nama presiden indonesia" ), [["siapa nama presiden indonesia", "jokowi"], ["siapa nama ibu kota indonesia", "jakarta"], ["siapa nama presiden amerika serikat", "donald trump"]], "kmp"));
+const mainAlgorithm = (query, listOfQnA, method) => {
+    const result = createAnswer(splitQuestion(query), listOfQnA, method);
+    return result;
+}
+
+/* q = "Pak ustadz Hitung 1+2+3+4? Hitung 1+2! Tambah pertanyaan x dengan jawaban y! 5/4/2023? Pak ustadz siapa nama presiden indonesia" 
+l = [["siapa nama presiden indonesia", "jokowi"], ["siapa nama ibu kota indonesia", "jakarta"], ["siapa nama presiden amerika serikat", "donald trump"]]
+m = "kmp"
+const t = createAnswer(splitQuestion(q), l, m);
+
+console.log(t); */
+
+/* console.log(main("Pak ustadz Hitung 1+2+3+4? Hitung 1+2! Tambah pertanyaan x dengan jawaban y! 5/4/2023? Pak ustadz siapa nama", [["siapa nama presiden indonesia", "jokowi"], ["siapa nama ibu kota indonesia", "jakarta"], ["siapa nama presiden amerika serikat", "donald trump"]], "bm")); */
+
+let a = mainAlgorithm("Pak ustadz Hitung 1+2+3+4? Hitung 1+2! Tambah pertanyaan x dengan jawaban y! 5/4/2023? Pak ustadz siapa nama", [["siapa nama presiden indonesia", "jokowi"], ["siapa nama ibu kota indonesia", "jakarta"], ["siapa nama presiden amerika serikat", "donald trump"]], "bm");
+
+for (let i = 0; i < a.length; i++) {
+    console.log(a[i] + "\n");
+}
 
 // console.log(splitQuestion("Siapa nama presiden indonesia! Siapa nama! Siapa? siapa, siapa?"))
 
@@ -73,4 +94,4 @@ console.log(createAnswer(splitQuestion("Pak ustadz Berapa 1+2+3+4? Tambah pertan
 // arr.splice(2,1)
 // console.log(arr)
 
-module.exports = createAnswer;
+module.exports = mainAlgorithm;

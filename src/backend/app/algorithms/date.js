@@ -117,7 +117,7 @@ const g = (y,m,d) => {
 const getDateAnswer = (query) => {
     date = query.match(/[0-9]+\/[0-9]+\/[0-9]+/g);
 
-    return answerDate(date);
+    return "Hari " + answerDate(date);
 }
 
 module.exports = {

@@ -152,16 +152,16 @@ const addDistance = (listOfQnA, pattern) => {
 }
 
 const noExactCase = (listOfQnA, pattern) => {
-    var weightedQnA = addDistance(listOfQnA, pattern);
+    const weightedQnA = addDistance(listOfQnA, pattern);
 
     const sortedWeightedQnA = weightedQnA.sort(function(a, b) {
         return b[2] - a[2];});
 
-    if (weightedQnA[0][2] > 0.9) {
-        return weightedQnA[0][1];
+    if (sortedWeightedQnA[0][2] > 0.9) {
+        return sortedWeightedQnA[0][1];
     }
     else {
-        return [weightedQnA[0][0], weightedQnA[1][0], weightedQnA[2][0]];
+        return "Pertanyaan tidak ditemukan di database. \nApakah maksud anda: \n" + "1. " + sortedWeightedQnA[0][0] + "\n2. " + sortedWeightedQnA[1][0] + "\n3. " + sortedWeightedQnA[2][0];
     }
 }
 
