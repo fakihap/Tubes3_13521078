@@ -1,5 +1,6 @@
 const db = require('../config/db.config.js');
 const algo = require('../algorithms/query.js');
+const mainAlgorithm = require('../algorithms/query.js');
 
 db.query("USE stima3", function(err, result){
     if (err) throw err;
@@ -226,8 +227,8 @@ const get_answer = async function(req, res){
         return;
     }
     try{
-        const answer = await read_answer(question);
-        res.status(200).send(answer);
+        const answer = await mainAlgorithm(question);
+        res.status(200).send(answer);   
     }
     catch(err){
         res.status(500).send("Failed to get answer!");
