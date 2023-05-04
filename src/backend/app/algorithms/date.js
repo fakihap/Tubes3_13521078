@@ -1,12 +1,12 @@
-const answerDate = (date) => {
-    const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+const answerDate = (d, m, y) => {
+    const days = ["Kamis", "Jumat", "Sabtu", "Minggu", "Senin", "Selasa", "Rabu"];
     
-    const d = new Date(date);
-    if (d == "Invalid Date") {
+    const date = new Date(y, m ,d);
+    if (date == "Invalid Date") {
         return "Invalid Date";
     }
     else {
-        return days[d.getDay()];
+        return days[date.getDay()];
     }
 }
 
@@ -115,9 +115,18 @@ const g = (y,m,d) => {
 }
 
 const getDateAnswer = (query) => {
-    date = query.match(/[0-9]+\/[0-9]+\/[0-9]+/g);
+    let date = query.match(/[0-9]+\/[0-9]+\/[0-9]+/g);
+    date = date[0].split('/');
+    day = parseInt(date[0], 10);
+    month = parseInt(date[1], 10);
+    year = parseInt(date[2], 10);
 
-    return "Hari " + answerDate(date);
+    if (validateDate(day, month, year)) {
+        return "Tanggal " + day + "/" + month + "/" + year + " adalah hari " +answerDate(day, month, year);
+    }
+    else {
+        return "Tanggal tidak valid!";
+    }
 }
 
 module.exports = {

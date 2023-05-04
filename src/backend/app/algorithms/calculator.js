@@ -150,9 +150,6 @@ const calculateExpression = (expression) => {
 }
 
 const getMathAnswer = (expression) => {
-    if (!expression) {
-        return;
-    }
     expression = expression.trim();
     return calculateExpression(convertToPostfix(convertToArray(expression)));
 } 

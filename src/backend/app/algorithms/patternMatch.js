@@ -139,7 +139,9 @@ const levenstheinDistance = (text, pattern) => {
             matrix[i][j] = Math.min(matrix[i-1][j] + 1, matrix[i][j-1] + 1, matrix[i-1][j-1] + subsCost);
         }
     }
-
+    if (lowerText.length > lowerPattern.length) {
+        return 1 - matrix[lowerText.length][lowerPattern.length] / lowerText.length;
+    }
     return 1 - matrix[lowerText.length][lowerPattern.length] / lowerPattern.length;
 }
 
@@ -152,17 +154,39 @@ const addDistance = (listOfQnA, pattern) => {
 }
 
 const noExactCase = (listOfQnA, pattern) => {
+    if (listOfQnA.length == 0) {
+        return "Database kosong, silahkan tambah pertanyaan.";
+    }
     const weightedQnA = addDistance(listOfQnA, pattern);
 
     const sortedWeightedQnA = weightedQnA.sort(function(a, b) {
         return b[2] - a[2];});
+    
 
     if (sortedWeightedQnA[0][2] > 0.9) {
         return sortedWeightedQnA[0][1];
     }
     else {
-        return "Pertanyaan tidak ditemukan di database. \nApakah maksud anda: \n" + "1. " + sortedWeightedQnA[0][0] + "\n2. " + sortedWeightedQnA[1][0] + "\n3. " + sortedWeightedQnA[2][0];
+        return "Pertanyaan tidak ditemukan di database. \n" + createRecommendation(sortedWeightedQnA);
     }
+}
+
+const createRecommendation = (sortedQnA) => {
+    let recommendation = "Apakah maksud anda: \n";
+
+    let nRec = 0;
+    if (sortedQnA.length < 3) {
+        nRec = sortedQnA.length;
+    }
+    else {
+        nRec = 3;
+    }
+
+    for (let i = 0; i < nRec; i++) {
+        recommendation += (i+1) + ". " + sortedQnA[i][0] + "\n";
+    }
+
+    return recommendation;
 }
 
 const getAnswer = (listOfQnA, pattern, method) => {
