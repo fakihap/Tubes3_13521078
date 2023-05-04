@@ -148,7 +148,7 @@ const levenstheinDistance = (text, pattern) => {
 const addDistance = (listOfQnA, pattern) => {
     temp = JSON.parse(JSON.stringify(listOfQnA));
     for (let i = 0; i < temp.length; i++) {
-        temp[i].push(levenstheinDistance(temp[i][0], pattern));
+        temp[i].weight = levenstheinDistance(temp[i].question, pattern);
     }
     return temp;
 }
@@ -160,11 +160,11 @@ const noExactCase = (listOfQnA, pattern) => {
     const weightedQnA = addDistance(listOfQnA, pattern);
 
     const sortedWeightedQnA = weightedQnA.sort(function(a, b) {
-        return b[2] - a[2];});
+        return b.weight - a.weight;});
     
 
-    if (sortedWeightedQnA[0][2] > 0.9) {
-        return sortedWeightedQnA[0][1];
+    if (sortedWeightedQnA[0].weight > 0.9) {
+        return sortedWeightedQnA[0].answer;
     }
     else {
         return "Pertanyaan tidak ditemukan di database. \n" + createRecommendation(sortedWeightedQnA);
@@ -183,7 +183,7 @@ const createRecommendation = (sortedQnA) => {
     }
 
     for (let i = 0; i < nRec; i++) {
-        recommendation += (i+1) + ". " + sortedQnA[i][0] + "\n";
+        recommendation += (i+1) + ". " + sortedQnA[i].question + "\n";
     }
 
     return recommendation;
@@ -192,15 +192,15 @@ const createRecommendation = (sortedQnA) => {
 const getAnswer = (listOfQnA, pattern, method) => {
     if (method == "kmp") {
         for (let i = 0; i < listOfQnA.length; i++) {
-            if (kmpMatch(listOfQnA[i][0], pattern) != -1) {
-                return listOfQnA[i][1];
+            if (kmpMatch(listOfQnA[i].question, pattern) != -1) {
+                return listOfQnA[i].answer;
             }
         }
     }
     else {
         for (let i = 0; i < listOfQnA.length; i++) {
-            if (bmMatch(listOfQnA[i][0], pattern) != -1) {
-                return listOfQnA[i][1];
+            if (bmMatch(listOfQnA[i].question, pattern) != -1) {
+                return listOfQnA[i].answer;
             }
         }
     }

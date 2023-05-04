@@ -78,12 +78,19 @@ console.log(t); */
 
 /* console.log(main("Pak ustadz Hitung 1+2+3+4? Hitung 1+2! Tambah pertanyaan x dengan jawaban y! 5/4/2023? Pak ustadz siapa nama", [["siapa nama presiden indonesia", "jokowi"], ["siapa nama ibu kota indonesia", "jakarta"], ["siapa nama presiden amerika serikat", "donald trump"]], "bm")); */
 
-let a = mainAlgorithm("Pak ustadz Hitung 1+2+3+4? Hitung 1+2! Tambah pertanyaan x dengan jawaban y! 5/4/2023? Pak ustadz siapa nama", [["siapa nama presiden indonesia", "jokowi"], ["siapa nama ibu kota indonesia", "jakarta"], ["siapa nama presiden amerika serikat", "donald trump"]], "bm");
+let qna = [{question: "siapa nama presiden indonesia", answer: "jokowi"}, {question: "siapa nama ibu kota indonesia", answer: "jakarta"}, {question: "siapa nama presiden amerika serikat", answer: "donald trump"}];
+
+let a = mainAlgorithm("Pak ustadz Hitung 1+2+3+4? Hitung 1+2! Tambah pertanyaan x dengan jawaban y! 5/4/2023? Pak ustadz siapa nama", qna, "bm");
 
 for (let i = 0; i < a.length; i++) {
     console.log(a[i] + "\n");
 }
 
+console.log(qna);
+
+/* let as = [{question: "a", answer: "b"}, {question: "c", answer: "d"}];
+as.push({question: "e", answer: "f"});
+console.log(as); */
 // console.log(splitQuestion("Siapa nama presiden indonesia! Siapa nama! Siapa? siapa, siapa?"))
 
 // console.log(classifyQuestion(splitQuestion("Tambah pertanyaan Siapa nama presiden indonesia dengan jawaban aaaaa! Hari apa 2/21/2020? Hapus pertanyaan x! Berapa 2+2?")))

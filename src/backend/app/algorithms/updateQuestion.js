@@ -3,12 +3,12 @@ const pattern = require('./patternMatch.js');
 const searchQuestion = (listOfQnA, query, method) => {
     for (let i = 0; i < listOfQnA?.length; i++) {
         if (method == "kmp") {
-            if (pattern.kmpMatch(listOfQnA[i][0], query) != -1) {
+            if (pattern.kmpMatch(listOfQnA[i].question, query) != -1) {
                 return i;
             }
         }
         else {
-            if (pattern.bmMatch(listOfQnA[i][0], query) != -1) {
+            if (pattern.bmMatch(listOfQnA[i].question, query) != -1) {
                 return i;
             }
         }
@@ -25,11 +25,11 @@ const addQuestion = (listOfQnA, query, method) => {
     const answer = splitQuery[1].trim();
     const index = searchQuestion(listOfQnA, question, method);
     if (index == -1) {
-        listOfQnA.push([question, answer]);
+        listOfQnA.push({question: question, answer: answer});
         return "Pertanyaan " + question +" berhasil ditambahkan!";
     }
     else {
-        listOfQnA[index][1] = answer;
+        listOfQnA[index].answer = answer;
         return "Pertanyaan " + question +" sudah ada! Jawaban diupdate ke " + answer;
     }
 }
