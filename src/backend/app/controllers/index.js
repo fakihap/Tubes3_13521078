@@ -25,9 +25,11 @@ async function read_question(question){
     }
 }
 
-async function read_history(){
+async function read_history_all(){
     try{
+        console.log("read history")
         const [rows, fields] = await db.promise().query("SELECT * FROM history");
+        console.log(rows)
         return rows;
     } catch (err) {
         throw err;
@@ -36,6 +38,9 @@ async function read_history(){
 
 async function read_history(id){
     try{
+        if (id == null){
+            return read_history_all();
+        }
         const [rows, fields] = await db.promise().query("SELECT * FROM history WHERE id = ?", [id]);
         return rows;
     } catch (err) {
