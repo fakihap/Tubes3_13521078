@@ -2,14 +2,9 @@ const db = require('../config/db.config.js');
 const algo = require('../algorithms/query.js');
 const mainAlgorithm = require('../algorithms/query.js');
 
-db.query("USE stima3", function(err, result){
-    if (err) throw err;
-    console.log("Successfully connected to database!");
-});
-
-
-async function read_question(){
+async function read_question_all(){
     try{
+        // select all tables
         const [rows, fields] = await db.promise().query("SELECT * FROM questions");
         return rows;
     } catch (err) {
@@ -19,7 +14,11 @@ async function read_question(){
 
 async function read_question(question){
     try{
+        if (question == null){
+            return read_question_all();
+        }
         const [rows, fields] = await db.promise().query("SELECT * FROM questions WHERE question = ?", [question]);
+        console.log(rows)
         return rows;
     } catch (err) {
         throw err;
@@ -46,7 +45,21 @@ async function read_history(id){
 
 async function add_question(question, answer){
     try{
-        const [rows, fields] = await db.promise().query("INSERT INTO questions (question, answer) VALUES (?, ?)", [question, answer]);
+        // check if question not exists first
+        let [rows, fields] = await db.promise().query("SELECT * FROM questions WHERE question = ?", [question]);
+        if (rows.length > 0){
+            update_question(question, answer);
+            return;
+        }
+        [rows, fields] = await db.promise().query("INSERT INTO questions (question, answer) VALUES (?, ?)", [question, answer]);
+    } catch (err) {
+        throw err;
+    }
+}
+
+async function update_question(question, answer){
+    try{
+        const [rows, fields] = await db.promise().query("UPDATE questions SET answer = ? WHERE question = ?", [answer, question]);
     } catch (err) {
         throw err;
     }
@@ -153,7 +166,7 @@ const post_history = async function(req, res){
 }
 
 const del_history = async function(req, res){
-    const id = req.params.id;
+    const id = req.body.id;
     if (id == null){
         res.status(400).send("ID cannot be null!");
         return;
@@ -173,7 +186,7 @@ const del_history = async function(req, res){
 }
 
 const del_question = async function(req, res){
-    const question = req.params.question;
+    const question = req.body.question;
     if (question == null){
         res.status(400).send("Question cannot be null!");
         return;
@@ -198,6 +211,10 @@ const del_question = async function(req, res){
 
 const delete_history_all = async function(req, res){
     try{
+        if (req.body.id != null){
+            del_history(req, res);
+            return;
+        }
         await clear_history();
         res.status(200).send("History cleared!");
     }
@@ -208,6 +225,10 @@ const delete_history_all = async function(req, res){
 
 const delete_question_all = async function(req, res){
     try{
+        if (req.body.question != null){
+            del_question(req, res);
+            return;
+        }
         await clear_question();
         res.status(200).send("Question cleared!");
     }
@@ -217,7 +238,10 @@ const delete_question_all = async function(req, res){
 }
 
 const get_answer = async function(req, res){
-    const question = req.params.question;
+    const question = req.body.question;
+    const method = req.body.method;
+    const listQnA = await read_question();
+    console.log(listQnA)
     if (question == null){
         res.status(400).send("Question cannot be null!");
         return;
@@ -227,7 +251,8 @@ const get_answer = async function(req, res){
         return;
     }
     try{
-        const answer = await mainAlgorithm(question);
+        const answer = await mainAlgorithm(question, listQnA, method);
+        console.log(answer)
         res.status(200).send(answer);   
     }
     catch(err){
