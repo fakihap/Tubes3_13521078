@@ -8,16 +8,27 @@ import axios from 'axios';
 import Sidebar from './components/Sidebar.vue';
 import ChatWrapper from './components/ChatWrapper.vue';
 
-  const messages = ref({});
+  const messages = ref([]);
   const useKMP = ref(true);
   const chatHistory = ref([]);
 
-  const setMessage = (_q, _a) => {
-      messages.value = {
-        question : _q,
-        answer : _a
-      }
+  const clearMessage = () => {
+      messages.value = []
     }
+
+  const setMessage = (_q, _a) => {
+    clearMessage()
+    addMessage(_q, _a)
+  }
+
+  const addMessage =  (_q, _a) => {
+    let _messages = JSON.parse(JSON.stringify(messages.value))
+    console.log(typeof(_messages))
+    messages.value = _messages.concat([{
+      question : _q,
+      answer : _a
+    }])
+  }
 
     const deleteMessage = (_id) => {
       console.log(_id)
@@ -65,7 +76,7 @@ import ChatWrapper from './components/ChatWrapper.vue';
       if (msg.toLowerCase().includes("hapus semua pertanyaan ")) {
         axios.delete('http://localhost:36656/question').then(response => console.log(response))
 
-        setMessage(msg, "semua pertanyaan telah dihapus") // DEBUG
+        addMessage(msg, "semua pertanyaan telah dihapus") // DEBUG
 
         return
       }
@@ -78,7 +89,7 @@ import ChatWrapper from './components/ChatWrapper.vue';
         }
       })
       .then(response => {
-        setMessage(msg, response.data[0])
+        addMessage(msg, response.data[0])
         console.log(response)
         axios.post('http://localhost:36656/history',
           {
@@ -100,11 +111,6 @@ import ChatWrapper from './components/ChatWrapper.vue';
     .then((response) => {
       chatHistory.value = response.data
     })
-  
-    //delete
-    
-
-
   })
 
 </script>
@@ -113,7 +119,9 @@ import ChatWrapper from './components/ChatWrapper.vue';
   <Sidebar :chat-histories="chatHistory"
           @set-use-kmp="(e) => useKMP = e" 
           @set-messages="(q, a) => setMessage(q, a)"
-          @delete-message="(id) => deleteMessage(id)"/>
+          @delete-message="(id) => deleteMessage(id)"
+          @clear-messages="clearMessage()"
+          />
 
   <!-- still considering using router to load chats-->
   <ChatWrapper :data=messages 

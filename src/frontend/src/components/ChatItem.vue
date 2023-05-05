@@ -1,26 +1,21 @@
 <template>
-    <div class="chatItem" 
-            style="justify-content: flex-start"
-            v-if="isBot">
-        <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> -->
-
-        <placeholderImg>{{ author }}</placeholderImg>
-        <div class="chatMessage chatLeft">{{ content }}</div>         
+    <div v-if="content.question != ''"
+            class="chatItem" 
+            style="justify-content: flex-end">
+        <div class="chatMessage chatRight">{{ content.question }}</div>         
+        <placeholderImg>user</placeholderImg>
     </div>
 
-    <div class="chatItem" 
-            style="justify-content: flex-end"
-            v-else>
-        <div class="chatMessage chatRight">{{ content }}</div>         
-        <placeholderImg>{{ author }}</placeholderImg>
+    <div v-if="content.question != ''"
+            class="chatItem" 
+            style="justify-content: flex-start">
+        <placeholderImg>bot</placeholderImg>
+        <div class="chatMessage chatLeft">{{ content.answer }}</div>         
     </div>
 </template>
 
 <script setup>
     defineProps({
-        author: String,
-        isBot: Boolean,
-        // time??
         content: String
     })
 </script>

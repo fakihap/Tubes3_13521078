@@ -27,7 +27,7 @@
                     </span>
                 </div>
                 <div class="chatHistoryAdd"
-                        @click="emit('set-messages', '', '')"
+                        @click="emit('clear-messages')"
                         >
                     <span class="material-symbols-outlined">
                         add

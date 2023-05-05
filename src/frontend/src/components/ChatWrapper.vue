@@ -3,18 +3,12 @@
      
     <div class="chatWrapper">
         <div    class="chatEmpty"    
-                v-if="!data.question && !data.answer">
+                v-if="data.length == 0">
                 Chat kosong
         </div>
-        <ChatItem   v-if="data.question"
-                    :content="data.question"
-                    :author="'fey'"
-                    :is-bot="false"
-                />
-        <ChatItem   v-if="data.answer"
-                    :content="data.answer"
-                    :author="'bot'"
-                    :is-bot="true"
+        <ChatItem v-for="(datum, index) in data"
+                    :content="datum"
+                    :key="index"
                 />
     </div>
 
