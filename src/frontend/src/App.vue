@@ -20,9 +20,23 @@ import ChatWrapper from './components/ChatWrapper.vue';
     }
 
     const submitMessage = (msg) => {
-      //TODO
-
-      console.log(msg)
+      axios.get('http://localhost:36656/answer',
+      {
+        params : {
+          question : msg,
+          method : useKMP.value ? "kmp" : "bm"
+        }
+      })
+      .then(response => {
+        setMessage(msg, response.data[0])
+        console.log(response)
+        axios.post('http://localhost:36656/history',
+          {
+              question : msg,
+              answer : response.data[0]
+          })
+          .then(response => console.log(response))
+      })
     }
 
   onMounted(() =>{
