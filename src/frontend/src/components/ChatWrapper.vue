@@ -11,8 +11,10 @@
     </div>
 
     <div class="chatInputField">
-        <div class="chatText"></div>
-        <div class="chatSubmit">
+        <div class="chatText">
+            <input id="chatInput" v-model="chatInput" placeholder="masukkan teks ...">
+        </div>
+        <div class="chatSubmit" @click="sendMsg(chatInput)">
             <span class="material-symbols-outlined">
                 send
             </span>
@@ -22,7 +24,16 @@
 </template>
 
 <script setup>
+    import { ref } from 'vue';
     import ChatItem from './ChatItem.vue'
+
+    const chatInput = ref('');
+
+    const sendMsg = (msg) => {
+        chatInput.value = ''
+
+        console.log(msg)
+    }
 
     defineProps({
         data: {
@@ -107,6 +118,26 @@
         background-color: #EDE6D8;
         color: #35333E;
         font-size: medium;
+    }
+
+    #chatInput {
+        border: none;
+        outline: none;
+
+        background-color: inherit;
+
+        padding: 1em;
+
+        font-size: large;
+
+        width: 100%;
+        height: 100%;
+
+        border-radius: inherit;
+    }
+
+    #chatInput:focus {
+        
     }
 
     @media (min-width: 1024px) {
