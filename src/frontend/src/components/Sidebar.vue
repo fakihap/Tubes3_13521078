@@ -19,6 +19,17 @@
                     {{item.title}}
                 </div>
             </div>
+            <div class="chatBotMethodRadioContainer">
+                <div class="chatBotMethodRadioItem">
+                    <input type="radio" id="kmpRadio" value="true" v-model="useKMP" />
+                    <label for="kmpRadio">KMP</label>
+                </div>
+                <div class="chatBotMethodRadioItem">
+                    <input type="radio" id="bmRadio" value="false" v-model="useKMP" />
+                    <label for="kmpRadio">BM</label>
+                </div>
+                
+            </div>
         </div>
     </aside>
 </template>
@@ -27,6 +38,7 @@
     import { ref } from 'vue';
 
     const sidebar_active = ref(false);
+    const useKMP = ref(true); // false = useBM
 
     const toggle_sidebar = () => {
         sidebar_active.value = !sidebar_active.value;
@@ -146,12 +158,16 @@
 
     .contentWrapper {
         width: 100%;
+
+        display: flex;
+
+        flex-direction: column;
     }
 
     .chatHistoryContainer {
         margin: 3rem 1rem;
 
-        max-height: 70vh;
+        max-height: 65vh;
 
         overflow-y: scroll;
 
@@ -171,6 +187,37 @@
 
     .chatHistoryItem > .material-symbols-outlined {
         margin-right: .5rem;
+    }
+
+    .chatBotMethodRadioContainer {
+        width: 70%;
+
+        align-self: center;
+
+        display: flex;
+        flex-direction: column;
+
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .chatBotMethodRadioItem {
+        width: 25vw;
+
+        padding: .2rem;
+
+        display: flex;
+
+        justify-content: space-between;
+        align-items: center;
+
+        font-size: larger;
+    }
+
+    #kmpRadio,
+    #bmRadio {
+        width: 2rem;
+        height: 2rem;
     }
 
     @media (min-width: 1024px) {
@@ -201,5 +248,9 @@
         aside.active > .material-symbols-outlined {
             right: 1rem;
         }    
+
+        .chatBotMethodRadioItem {
+            width: 5vw;
+        }
     }
 </style>
