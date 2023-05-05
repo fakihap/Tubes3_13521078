@@ -22,7 +22,7 @@
 
 <style>
     :root{
-        --left-bubble-bg: #95A0BA;
+        --left-bubble-bg: #6d7588;
         --right-buble-bg: #EDE6D8;
 
         --left-bubble-text: #EAE8F3;
