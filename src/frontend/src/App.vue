@@ -32,7 +32,7 @@ import ChatWrapper from './components/ChatWrapper.vue';
     axios.get('http://localhost:36656/history')
     .then((response) => {
       chatHistory.value = response.data
-      setMessage(chatHistory.value[0].question, chatHistory.value[0].answer)
+      // setMessage(chatHistory.value[0].question, chatHistory.value[0].answer)
     })
 
     

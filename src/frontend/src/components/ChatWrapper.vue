@@ -2,11 +2,17 @@
     <div class="chatTopbar"></div>
      
     <div class="chatWrapper">
-        <ChatItem   :content="data.question"
+        <div    class="chatEmpty"    
+                v-if="!data.question && !data.answer">
+                Chat kosong
+        </div>
+        <ChatItem   v-if="data.question"
+                    :content="data.question"
                     :author="'fey'"
                     :is-bot="false"
                 />
-        <ChatItem   :content="data.answer"
+        <ChatItem   v-if="data.answer"
+                    :content="data.answer"
                     :author="'bot'"
                     :is-bot="true"
                 />
@@ -70,6 +76,14 @@
         padding: 3rem 0;
 
         transition: 0.3s ease-out;
+    }
+
+    .chatEmpty {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        height: 100%;
     }
 
     .chatInputField {
