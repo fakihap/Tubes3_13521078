@@ -35,24 +35,20 @@ import ChatWrapper from './components/ChatWrapper.vue';
               question : msg,
               answer : response.data[0]
           })
-          .then(response => console.log(response))
+          .then(response => {
+            console.log(response)
+            axios.get('http://localhost:36656/history')
+                .then((response) => {
+                  chatHistory.value = response.data
+                })
+          })
       })
     }
 
   onMounted(() =>{
-    //get
-    // axios.get('http://localhost:36656/answer',
-    // {
-    //   params : {
-    //     question : "siapa manusia tertampan di dunia",
-    //     method : "bm"
-    //   }
-    // })
-    // .then(response => console.log(response))
     axios.get('http://localhost:36656/history')
     .then((response) => {
       chatHistory.value = response.data
-      // setMessage(chatHistory.value[0].question, chatHistory.value[0].answer)
     })
 
     
