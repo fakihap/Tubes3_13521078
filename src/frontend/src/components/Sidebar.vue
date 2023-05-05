@@ -19,6 +19,12 @@
                     </span>
                     {{item.question}}
                 </div>
+                <div class="chatHistoryAdd">
+                    <span class="material-symbols-outlined">
+                        add
+                    </span>
+                    Add New Chat
+                </div>
             </div>
             <div class="chatBotMethodRadioContainer">
                 <div class="chatBotMethodRadioItem">
@@ -137,7 +143,8 @@
         align-items: flex-start;
     }
 
-    .chatHistoryItem {
+    .chatHistoryItem,
+    .chatHistoryAdd {
         margin: .5rem;
 
         display: flex;
@@ -145,9 +152,20 @@
         align-items: flex-start;
 
         cursor: pointer;
+
+        transition: ease-in-out .1s;
     }
 
-    .chatHistoryItem > .material-symbols-outlined {
+    .chatHistoryItem:hover,
+    .chatHistoryAdd:hover {
+        padding: 6px 14px;
+        border-radius: 40px;
+        background-color: #6b6c872c;
+        backdrop-filter: blur(10px);
+    }
+
+    .chatHistoryItem > .material-symbols-outlined,
+    .chatHistoryAdd > .material-symbols-outlined {
         margin-right: .5rem;
     }
 
