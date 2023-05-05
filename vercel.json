@@ -1,0 +1,21 @@
+{
+    "version": 2,
+    "github": {
+      "enabled": true
+    },
+    "builds": [
+      {
+        "src": "src/backend/server.js",
+        "use": "@now/node"
+      },
+      {
+        "src": "src/frontend/dist/*",
+        "use": "@now/static"
+      }
+    ],
+    "routes": [
+      { "handle": "filesystem" },
+      { "src": "/", "dest": "src/frontend/index.html" },
+      { "src": "/(.*)", "dest": "src/backend/server.js" }
+    ]
+  }
