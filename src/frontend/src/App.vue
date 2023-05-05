@@ -89,12 +89,12 @@ import ChatWrapper from './components/ChatWrapper.vue';
         }
       })
       .then(response => {
-        addMessage(msg, response.data[0])
+        addMessage(msg, response.data)
         console.log(response)
         axios.post('http://localhost:36656/history',
           {
               question : msg,
-              answer : response.data[0]
+              answer : response.data
           })
           .then(response => {
             console.log(response)

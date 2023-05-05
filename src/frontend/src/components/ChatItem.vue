@@ -7,10 +7,12 @@
     </div>
 
     <div v-if="content.question != ''"
+            v-for="(chat, idx) in content.answer"
             class="chatItem" 
-            style="justify-content: flex-start">
+            style="justify-content: flex-start"
+            :key="idx">
         <placeholderImg>bot</placeholderImg>
-        <div class="chatMessage chatLeft">{{ content.answer }}</div>         
+        <div class="chatMessage chatLeft">{{ chat }}</div>         
     </div>
 </template>
 
