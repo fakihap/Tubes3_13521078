@@ -2,11 +2,13 @@
     <div class="chatTopbar"></div>
      
     <div class="chatWrapper">
-        <ChatItem v-for="(msg, index) in data"
-                :author="msg.author"
-                :content="msg.content"
-                :is-bot="msg.author == 'fey' ? true : false"
-                :key="index"
+        <ChatItem   :content="data.question"
+                    :author="'fey'"
+                    :is-bot="false"
+                />
+        <ChatItem   :content="data.answer"
+                    :author="'bot'"
+                    :is-bot="true"
                 />
     </div>
 

@@ -8,21 +8,17 @@ import axios from 'axios';
 import Sidebar from './components/Sidebar.vue';
 import ChatWrapper from './components/ChatWrapper.vue';
 
-const messages = [
-  {
-    author: 'flemming',
-    content: 'hello from App.vue'
-  },
-  {
-    author: 'fey',
-    content: 'hello to u 2'
-  },
-]  
-
+  const messages = ref({});
   const useKMP = ref(true);
-
-  
   const chatHistory = ref([]);
+
+  const setMessage = (_q, _a) => {
+      messages.value = {
+        question : _q,
+        answer : _a
+      }
+    }
+
   onMounted(() =>{
     //get
     // axios.get('http://localhost:36656/answer',
@@ -33,15 +29,10 @@ const messages = [
     //   }
     // })
     // .then(response => console.log(response))
-    axios.get('http://localhost:36656/history',
-    {
-      params : {
-        question : "siapa manusia tertampan di dunia",
-        method : "bm"
-      }
-    })
+    axios.get('http://localhost:36656/history')
     .then((response) => {
       chatHistory.value = response.data
+      setMessage(chatHistory.value[0].question, chatHistory.value[0].answer)
     })
 
     
@@ -74,8 +65,9 @@ const messages = [
 
 <template>
   <Sidebar :chat-histories="chatHistory"
-          @set-use-kmp="(e) => useKMP = e" />
-          
+          @set-use-kmp="(e) => useKMP = e" 
+          @set-messages="(q, a) => setMessage(q, a)"/>
+
   <!-- still considering using router to load chats-->
   <ChatWrapper :data=messages />
 

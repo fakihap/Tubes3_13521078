@@ -12,6 +12,7 @@
                 <div class="chatHistoryItem"
                         v-for="(item, index) in chatHistories"
                         :key="index"
+                        @click="emit('set-messages', item.question, item.answer)"
                         >
                     <span class="material-symbols-outlined">
                         chat
@@ -51,7 +52,7 @@
         }
     })
 
-    const emit = defineEmits(['set-use-kmp'])
+    const emit = defineEmits(['set-use-kmp', 'set-messages'])
 
     const setKMP = (state) => {
         emit('set-use-kmp', state)
@@ -106,6 +107,8 @@
         'wght' 400,
         'GRAD' 0,
         'opsz' 48;
+
+        cursor: pointer;
     }
 
     aside.active > .material-symbols-outlined {
@@ -140,6 +143,8 @@
         display: flex;
         justify-content: center;
         align-items: flex-start;
+
+        cursor: pointer;
     }
 
     .chatHistoryItem > .material-symbols-outlined {
@@ -175,6 +180,8 @@
     #bmRadio {
         width: 2rem;
         height: 2rem;
+
+        cursor: pointer;
     }
 
     @media (min-width: 1024px) {
