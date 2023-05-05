@@ -19,6 +19,12 @@ import ChatWrapper from './components/ChatWrapper.vue';
       }
     }
 
+    const submitMessage = (msg) => {
+      //TODO
+
+      console.log(msg)
+    }
+
   onMounted(() =>{
     //get
     // axios.get('http://localhost:36656/answer',
@@ -69,7 +75,8 @@ import ChatWrapper from './components/ChatWrapper.vue';
           @set-messages="(q, a) => setMessage(q, a)"/>
 
   <!-- still considering using router to load chats-->
-  <ChatWrapper :data=messages />
+  <ChatWrapper :data=messages 
+                @submit-question="(e) => submitMessage(e)"/>
 
 </template>
 

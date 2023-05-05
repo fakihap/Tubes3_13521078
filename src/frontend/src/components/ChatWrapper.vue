@@ -37,18 +37,22 @@
 
     const chatInput = ref('');
 
-    const sendMsg = (msg) => {
-        chatInput.value = ''
-
-        console.log(msg)
-    }
-
     defineProps({
         data: {
             type: Object,
             required: false
         }
     })
+
+    const emit = defineEmits(['submit-question'])
+
+    const sendMsg = (msg) => {
+        emit('submit-question', msg)
+        
+        chatInput.value = ''
+    }
+
+    
 </script>
 
 <style>
