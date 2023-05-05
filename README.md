@@ -13,6 +13,7 @@
 5.	Jalankan backend dengan mengarahkan terminal ke dalam folder backend dan jalankan perintah npm run start
 6.	Jalankan frontend dengan mengarahkan terminal ke dalam folder frontend dan jalankan perintah npm run host
 7.	Seharusnya aplikasi web akan berjalan pada beberapa pranala yang diberikan ketika perintah npm run host dijalankan (contoh: localhost:5173)
+* Karena satu dan lain hal, maka akses ke database dirahasiakan, bila ingin menjalankan program silakan kontak Marthen
 
 ## Kontributor
 1. [135211078 - Christian Alber Hasiholan](https://github.com/ChrisAlberth)
