@@ -37,6 +37,28 @@ import ChatWrapper from './components/ChatWrapper.vue';
     }
 
     const submitMessage = (msg) => {
+      if (msg.toLowerCase().includes("tambah pertanyaan ") && msg.toLowerCase().includes(" dengan jawaban ")) {
+        let _msg = msg.toLowerCase().replace("tambah pertanyaan ", "") //TODO
+        _msg = msg.split(" dengan jawaban ", 2)
+
+        axios.post('http://localhost:36656/question',
+        {
+            question : _msg[0],
+            answer : _msg[1]
+        }).then(response => console.log(response))
+      }
+
+      if (msg.toLowerCase().includes("hapus pertanyaan ")) {
+        let _msg = msg.toLowerCase().replace("hapus pertanyaan ", "")
+
+        axios.delete('http://localhost:36656/question',
+        {
+          data : {
+            question : _msg,
+          }
+        }).then(response => console.log(response))
+      }
+
       axios.get('http://localhost:36656/answer',
       {
         params : {
@@ -67,29 +89,9 @@ import ChatWrapper from './components/ChatWrapper.vue';
     .then((response) => {
       chatHistory.value = response.data
     })
-
-    
-
-    //post
-    // axios.post('http://localhost:36656/question',
-    // {
-      
-    //     question : "halo di sana?",
-    //     answer : "iya"
-
-      
-    // })
-    // .then(response => console.log(response))
   
     //delete
-    //     axios.delete('http://localhost:36656/question',
-    // {
-      
-    //     id : "halo di sana?",
-
-      
-    // })
-    // .then(response => console.log(response))
+    
 
 
   })
