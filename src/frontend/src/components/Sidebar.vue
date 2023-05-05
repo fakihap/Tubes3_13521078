@@ -21,11 +21,11 @@
             </div>
             <div class="chatBotMethodRadioContainer">
                 <div class="chatBotMethodRadioItem">
-                    <input type="radio" id="kmpRadio" value="true" v-model="useKMP" />
+                    <input type="radio" id="kmpRadio" value="true" v-model="useKMP" @click="setKMP(true)" />
                     <label for="kmpRadio">KMP</label>
                 </div>
                 <div class="chatBotMethodRadioItem">
-                    <input type="radio" id="bmRadio" value="false" v-model="useKMP" />
+                    <input type="radio" id="bmRadio" value="false" v-model="useKMP" @click="setKMP(false)" />
                     <label for="kmpRadio">BM</label>
                 </div>
                 
@@ -50,6 +50,13 @@
             required: true
         }
     })
+
+    const emit = defineEmits(['set-use-kmp'])
+
+    const setKMP = (state) => {
+        emit('set-use-kmp', state)
+        useKMP.value = state
+    }
 </script>
 
 <style>

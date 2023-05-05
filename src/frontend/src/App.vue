@@ -19,6 +19,8 @@ const messages = [
   },
 ]  
 
+  const useKMP = ref(true);
+
   
   const chatHistory = ref([]);
   onMounted(() =>{
@@ -71,11 +73,12 @@ const messages = [
 </script>
 
 <template>
-  <Sidebar :chat-histories="chatHistory" />
-
+  <Sidebar :chat-histories="chatHistory"
+          @set-use-kmp="(e) => useKMP = e" />
+          
   <!-- still considering using router to load chats-->
   <ChatWrapper :data=messages />
-  
+
 </template>
 
 <style scoped>
