@@ -243,8 +243,8 @@ const delete_question_all = async function(req, res){
 }
 
 const get_answer = async function(req, res){
-    const question = req.body.question;
-    const method = req.body.method;
+    const question = req.query.question;
+    const method = req.query.method;
     const listQnA = await read_question();
     console.log(listQnA)
     if (question == null){
