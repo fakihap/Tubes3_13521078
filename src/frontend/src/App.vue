@@ -19,6 +19,23 @@ import ChatWrapper from './components/ChatWrapper.vue';
       }
     }
 
+    const deleteMessage = (_id) => {
+      console.log(_id)
+        axios.delete('http://localhost:36656/history',
+        {
+          data : {
+            id : _id, 
+          }
+        })
+        .then(response => {
+          console.log(response.body)
+          axios.get('http://localhost:36656/history')
+                .then((response) => {
+                  chatHistory.value = response.data
+                })
+        })
+    }
+
     const submitMessage = (msg) => {
       axios.get('http://localhost:36656/answer',
       {
@@ -82,7 +99,8 @@ import ChatWrapper from './components/ChatWrapper.vue';
 <template>
   <Sidebar :chat-histories="chatHistory"
           @set-use-kmp="(e) => useKMP = e" 
-          @set-messages="(q, a) => setMessage(q, a)"/>
+          @set-messages="(q, a) => setMessage(q, a)"
+          @delete-message="(id) => deleteMessage(id)"/>
 
   <!-- still considering using router to load chats-->
   <ChatWrapper :data=messages 

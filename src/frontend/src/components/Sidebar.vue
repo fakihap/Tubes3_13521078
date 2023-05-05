@@ -12,12 +12,19 @@
                 <div class="chatHistoryItem"
                         v-for="(item, index) in chatHistories"
                         :key="index"
-                        @click="emit('set-messages', item.question, item.answer)"
                         >
-                    <span class="material-symbols-outlined">
-                        chat
+                    
+                    <div class="chatHistoryItemText"
+                            @click="emit('set-messages', item.question, item.answer)">
+                        <span class="material-symbols-outlined">
+                            chat
+                        </span>
+                        {{item.question}}
+                    </div>
+                    <span class="material-symbols-outlined"
+                            @click="emit('delete-message', item.id)">
+                        delete
                     </span>
-                    {{item.question}}
                 </div>
                 <div class="chatHistoryAdd"
                         @click="emit('set-messages', '', '')"
@@ -60,7 +67,7 @@
         }
     })
 
-    const emit = defineEmits(['set-use-kmp', 'set-messages'])
+    const emit = defineEmits(['set-use-kmp', 'set-messages', 'delete-message'])
 
     const setKMP = (state) => {
         emit('set-use-kmp', state)
@@ -151,24 +158,37 @@
 
         display: flex;
         justify-content: center;
-        align-items: flex-start;
+        align-items: center;
 
         cursor: pointer;
 
         transition: ease-in-out .1s;
     }
 
-    .chatHistoryItem:hover,
+    .chatHistoryItemText {
+        padding: 6px 3px 6px 8px;
+    }
+
+    .chatHistoryItemText:hover,
     .chatHistoryAdd:hover {
-        padding: 6px 14px;
-        border-radius: 40px;
+        padding: 6px 3px 6px 8px;
+        border-radius: 40px 0 0 40px;
         background-color: #6b6c872c;
         backdrop-filter: blur(10px);
     }
 
-    .chatHistoryItem > .material-symbols-outlined,
+    .chatHistoryItemText > .material-symbols-outlined,
     .chatHistoryAdd > .material-symbols-outlined {
         margin-right: .5rem;
+    }
+
+    .chatHistoryItemText {
+        display: flex;
+
+        justify-content: flex-start;
+        align-items: center;
+
+        width: 13vw;
     }
 
     .chatBotMethodRadioContainer {
