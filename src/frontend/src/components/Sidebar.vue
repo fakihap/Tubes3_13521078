@@ -19,7 +19,9 @@
                     </span>
                     {{item.question}}
                 </div>
-                <div class="chatHistoryAdd">
+                <div class="chatHistoryAdd"
+                        @click="emit('set-messages', '', '')"
+                        >
                     <span class="material-symbols-outlined">
                         add
                     </span>
