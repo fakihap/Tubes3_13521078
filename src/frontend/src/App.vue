@@ -1,10 +1,8 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import { RouterLink, RouterView } from 'vue-router';
 
 import axios from 'axios';
 
-// import HelloWorld from './components/HelloWorld.vue';
 import Sidebar from './components/Sidebar.vue';
 import ChatWrapper from './components/ChatWrapper.vue';
 
@@ -122,7 +120,6 @@ import ChatWrapper from './components/ChatWrapper.vue';
           @clear-messages="clearMessage()"
           />
 
-  <!-- still considering using router to load chats-->
   <ChatWrapper :data=messages 
                 @submit-question="(e) => submitMessage(e)"/>
 

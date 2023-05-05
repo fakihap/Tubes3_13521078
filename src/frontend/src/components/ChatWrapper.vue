@@ -68,7 +68,7 @@
         display: flex;
         flex-direction: column;
 
-        min-height: 100vh;
+        height: 100vh;
         width: 98vw;
 
         padding: 3rem 0;
@@ -157,6 +157,12 @@
     @media (min-width: 1024px) {
         .chatWrapper {
             padding: 3rem 2rem;
+            
+            height: 90vh;
+
+            overflow-y: auto;
+
+            top: -4vh;
         }
 
         .chatInputField {
