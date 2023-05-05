@@ -37,9 +37,10 @@ import ChatWrapper from './components/ChatWrapper.vue';
     }
 
     const submitMessage = (msg) => {
+      // tambah pertanyaan
       if (msg.toLowerCase().includes("tambah pertanyaan ") && msg.toLowerCase().includes(" dengan jawaban ")) {
-        let _msg = msg.toLowerCase().replace("tambah pertanyaan ", "") //TODO
-        _msg = msg.split(" dengan jawaban ", 2)
+        let _msg = msg.toLowerCase().replace("tambah pertanyaan ", "")
+        _msg = _msg.split(" dengan jawaban ", 2)
 
         axios.post('http://localhost:36656/question',
         {
@@ -48,6 +49,7 @@ import ChatWrapper from './components/ChatWrapper.vue';
         }).then(response => console.log(response))
       }
 
+      // hapus pertanyaan
       if (msg.toLowerCase().includes("hapus pertanyaan ")) {
         let _msg = msg.toLowerCase().replace("hapus pertanyaan ", "")
 
@@ -57,6 +59,15 @@ import ChatWrapper from './components/ChatWrapper.vue';
             question : _msg,
           }
         }).then(response => console.log(response))
+      }
+
+      // hapus semua pertanyaan
+      if (msg.toLowerCase().includes("hapus semua pertanyaan ")) {
+        axios.delete('http://localhost:36656/question').then(response => console.log(response))
+
+        setMessage(msg, "semua pertanyaan telah dihapus") // DEBUG
+
+        return
       }
 
       axios.get('http://localhost:36656/answer',
