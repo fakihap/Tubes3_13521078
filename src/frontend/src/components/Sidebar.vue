@@ -16,7 +16,7 @@
                     <span class="material-symbols-outlined">
                         chat
                     </span>
-                    {{item.title}}
+                    {{item.question}}
                 </div>
             </div>
             <div class="chatBotMethodRadioContainer">
@@ -44,63 +44,12 @@
         sidebar_active.value = !sidebar_active.value;
     }
 
-    //TODO
-    const chatHistories = [
-        {
-            title: 'tanya PR'
-        },
-        {
-            title: 'saran makan malam'
-        },
-        {
-            title: '2 + 1 = berapa?'
-        },
-        {
-            title: 'tanya PR'
-        },
-        {
-            title: 'saran makan malam'
-        },
-        {
-            title: '2 + 1 = berapa?'
-        },
-        {
-            title: 'tanya PR'
-        },
-        {
-            title: 'saran makan malam'
-        },
-        {
-            title: '2 + 1 = berapa?'
-        },
-        {
-            title: 'tanya PR'
-        },
-        {
-            title: 'saran makan malam'
-        },
-        {
-            title: '2 + 1 = berapa?'
-        },
-        {
-            title: 'tanya PR'
-        },
-        {
-            title: 'saran makan malam'
-        },
-        {
-            title: '2 + 1 = berapa?'
-        },
-        {
-            title: 'tanya PR'
-        },
-        {
-            title: 'saran makan malam'
-        },
-        {
-            title: '2 + 1 = berapa?'
-        },
-    ]
+    defineProps({
+        chatHistories: {
+            type: Array,
+            required: true
+        }
+    })
 </script>
 
 <style>
@@ -167,9 +116,10 @@
     .chatHistoryContainer {
         margin: 3rem 1rem;
 
-        max-height: 65vh;
+        
+        height: 65vh;
 
-        overflow-y: scroll;
+        overflow-y: auto;
 
         display: flex;
         flex-direction: column;
