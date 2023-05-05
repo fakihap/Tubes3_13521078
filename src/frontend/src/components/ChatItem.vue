@@ -7,7 +7,7 @@
     </div>
 
     <div v-if="content.question != ''"
-            v-for="(chat, idx) in content.answer"
+            v-for="(chat, idx) in isJSONValid(content.answer) ? JSON.parse(content.answer) : content.answer"
             class="chatItem" 
             style="justify-content: flex-start"
             :key="idx">
@@ -20,6 +20,14 @@
     defineProps({
         content: String
     })
+
+    const isJSONValid = (str) => {
+        try {
+            return (JSON.parse(str) && !!str);
+        } catch (e) {
+            return false;
+        }
+    }
 </script>
 
 <style>

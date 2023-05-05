@@ -23,7 +23,6 @@ import ChatWrapper from './components/ChatWrapper.vue';
 
   const addMessage =  (_q, _a) => {
     let _messages = JSON.parse(JSON.stringify(messages.value))
-    console.log(typeof(_messages))
     messages.value = _messages.concat([{
       question : _q,
       answer : _a
@@ -94,7 +93,7 @@ import ChatWrapper from './components/ChatWrapper.vue';
         axios.post('http://localhost:36656/history',
           {
               question : msg,
-              answer : response.data
+              answer : JSON.stringify(response.data)
           })
           .then(response => {
             console.log(response)
